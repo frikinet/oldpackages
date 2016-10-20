@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lirc
-PKG_VERSION:=0.9.2a
+PKG_VERSION:=0.9.4b
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=@SF/${PKG_NAME}
-PKG_MD5SUM:=639a14ed0b3b34ae227a047b952ea368
+PKG_MD5SUM:=9e3f2869a47bbd7c973dd63f30c13fc2
 
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
@@ -30,7 +30,7 @@ define Package/lirc
 	$(call Package/lirc/Default)
 	TITLE:=LIRC - Linux Infrared Remote Control
 	MENU:=1
-	DEPENDS:=+libpthread
+	DEPENDS:=+libpthread +libstdcpp
 endef
 
 define Package/lirc/description
@@ -60,7 +60,6 @@ endef
 
 CONFIGURE_ARGS += \
 	--with-driver="usb_irtoy" \
-	--with-driver="zotac" \
 	--with-gnu-ld \
 	--with-pic \
 	--without-x \
@@ -85,6 +84,7 @@ define Package/lirc/install
 	$(INSTALL_DIR) $(1)/usr/lib/
 	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/lib/liblirc.so.0 $(1)/usr/lib/
 	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/lib/liblirc_client.so.0 $(1)/usr/lib/
+	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/lib/libirrecord.so.0 $(1)/usr/lib/
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/liblirc.{la,so*} $(1)/usr/lib/
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/liblirc_client.{la,so*} $(1)/usr/lib/
 endef
